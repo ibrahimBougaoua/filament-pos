@@ -2,9 +2,9 @@
 
 namespace IbrahimBougaoua\FilamentPos;
 
+use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
 
 class FilamentPosServiceProvider extends PackageServiceProvider
 {

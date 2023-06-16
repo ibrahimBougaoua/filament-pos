@@ -8,11 +8,24 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('filament_pos_table', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->string("slug");
+            $table->text("description")->nullable();
+            $table->string("image")->nullable();
+            $table->boolean("status")->default(false);
+            $table->unsignedBigInteger('cate_id')->nullable();
+            $table->foreign('cate_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->softDeletes();
+            $table->timestamps();
+        });
 
-            // add fields
-
+        Schema::create('units', function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("short_name")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace IbrahimBougaoua\FilamentPos;
 
 use Filament\PluginServiceProvider;
 use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
+use IbrahimBougaoua\FilamentPos\Resources\BrandResource;
 use IbrahimBougaoua\FilamentPos\Resources\CategoryResource;
 use IbrahimBougaoua\FilamentPos\Resources\UnitResource;
 use Spatie\LaravelPackageTools\Package;
@@ -13,6 +14,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
     protected array $resources = [
         CategoryResource::class,
         UnitResource::class,
+        BrandResource::class,
     ];
 
     public function configurePackage(Package $package): void

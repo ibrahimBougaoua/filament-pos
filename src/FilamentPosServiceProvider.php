@@ -6,6 +6,7 @@ use Filament\PluginServiceProvider;
 use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
 use IbrahimBougaoua\FilamentPos\Resources\BrandResource;
 use IbrahimBougaoua\FilamentPos\Resources\CategoryResource;
+use IbrahimBougaoua\FilamentPos\Resources\PriceGroupResource;
 use IbrahimBougaoua\FilamentPos\Resources\UnitResource;
 use Spatie\LaravelPackageTools\Package;
 
@@ -15,6 +16,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
         CategoryResource::class,
         UnitResource::class,
         BrandResource::class,
+        PriceGroupResource::class,
     ];
 
     public function configurePackage(Package $package): void

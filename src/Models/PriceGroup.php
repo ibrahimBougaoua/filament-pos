@@ -10,8 +10,8 @@ class PriceGroup extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "description",
-        "status"
+        'name',
+        'description',
+        'status',
     ];
 }

@@ -10,11 +10,11 @@ class Variation extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name"
+        'name',
     ];
-    
+
     public function values()
     {
-        return $this->hasMany(VariationValue::class,"variation_id");
+        return $this->hasMany(VariationValue::class, 'variation_id');
     }
 }

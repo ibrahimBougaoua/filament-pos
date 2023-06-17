@@ -61,5 +61,24 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string("name"); 
+            $table->string("slug");
+            $table->string("sku");
+            $table->text("description")->nullable();
+            $table->enum("barcode_type",['C39','C128','EAN13','EAN8','UPCA','UPCE'])->default('C128');
+            $table->string("image")->nullable();
+            $table->boolean("status")->default(false);
+            $table->unsignedBigInteger('cate_id')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->foreign('cate_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 };

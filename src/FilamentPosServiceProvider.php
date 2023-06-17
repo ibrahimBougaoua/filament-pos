@@ -4,6 +4,7 @@ namespace IbrahimBougaoua\FilamentPos;
 
 use Filament\PluginServiceProvider;
 use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
+use IbrahimBougaoua\FilamentPos\Pages\PosPage;
 use IbrahimBougaoua\FilamentPos\Resources\BrandResource;
 use IbrahimBougaoua\FilamentPos\Resources\CategoryResource;
 use IbrahimBougaoua\FilamentPos\Resources\PriceGroupResource;
@@ -15,6 +16,14 @@ use Spatie\LaravelPackageTools\Package;
 
 class FilamentPosServiceProvider extends PluginServiceProvider
 {
+    protected array $styles = [
+        'pos-styles' => __DIR__ . '/../dist/css/app.css',
+    ];
+
+    protected array $beforeCoreScripts = [
+        'pos-scripts' => __DIR__.'/../dist/js/scripts.js',
+    ];
+
     protected array $resources = [
         CategoryResource::class,
         UnitResource::class,
@@ -23,6 +32,10 @@ class FilamentPosServiceProvider extends PluginServiceProvider
         VariationResource::class,
         ProductResource::class,
         CustomerResource::class,
+    ];
+
+    protected array $pages = [
+        PosPage::class,
     ];
     
     public function configurePackage(Package $package): void

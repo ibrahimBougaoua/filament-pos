@@ -4,10 +4,11 @@ namespace IbrahimBougaoua\FilamentPos\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory,Searchable;
 
     protected $fillable = [
         "name",
@@ -15,12 +16,23 @@ class Product extends Model
         "sku",
         "barcode_type",
         "description",
+        "price",
         "image",
         "status",
         "cate_id",
         "unit_id",
         "brand_id"
     ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'sku' => $this->sku,
+            'description' => $this->description,
+            'barcode_type' => $this->barcode_type,
+        ];
+    }
     
     public function category()
     {

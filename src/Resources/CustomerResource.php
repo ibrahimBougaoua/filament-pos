@@ -2,12 +2,10 @@
 
 namespace IbrahimBougaoua\FilamentPos\Resources;
 
-use Filament\Tables\Columns\ImageColumn;
-use IbrahimBougaoua\FilamentPos\Resources\CategoryResource\Pages;
-use IbrahimBougaoua\FilamentPos\Models\Category;
+use Filament\Forms\Components\Textarea;
+use IbrahimBougaoua\FilamentPos\Resources\CustomerResource\Pages;
+use IbrahimBougaoua\FilamentPos\Models\Customer;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -21,9 +19,9 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Str;
 
-class CategoryResource extends Resource
+class CustomerResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
@@ -35,30 +33,51 @@ class CategoryResource extends Resource
         ->schema([
             Forms\Components\Card::make()
             ->schema([
-                TextInput::make('name')->label('Name')->required()
-                ->reactive()
-                ->afterStateUpdated(function($state,callable $set){
-                    $set('slug',Str::slug($state));
-                })
-                ->columnSpan([
-                    'md' => 12,
-                ]),
-                TextInput::make('slug')->label('Slug')
+                TextInput::make('name')->label('Name')
                 ->required()
-                ->disabled()
                 ->columnSpan([
-                    'md' => 12,
+                    'md' => 6,
                 ]),
-                MarkdownEditor::make('description')->label('Description')
+                TextInput::make('first_name')->label('First name')
+                ->required()
                 ->columnSpan([
-                    'md' => 12,
+                    'md' => 6,
                 ]),
-                Select::make('cate_id')
-                ->label(__('panel.patient'))
-                ->options(Category::pluck('name','id')->toArray())
-                ->searchable()
+                TextInput::make('last_name')->label('Last name')
+                ->required()
                 ->columnSpan([
-                    'md' => 12,
+                    'md' => 6,
+                ]),
+                TextInput::make('mobile')->label('Mobile')
+                ->required()
+                ->numeric()
+                ->columnSpan([
+                    'md' => 6,
+                ]),
+                Textarea::make('address_line_1')->label('Address line 1')
+                ->columnSpan([
+                    'md' => 6,
+                ]),
+                Textarea::make('address_line_2')->label('Address line 1')
+                ->columnSpan([
+                    'md' => 6,
+                ]),
+                Select::make('civility')->label('Civility')
+                ->options([
+                    'M' => 'M',
+                    'Mme' => 'Mme',
+                    'Mlle' => 'Mlle',
+                ])->default('M')->disablePlaceholderSelection()
+                ->columnSpan([
+                    'md' => 4,
+                ]),
+                Select::make('type')->label('Type')
+                ->options([
+                    'Individual' => 'Individual',
+                    'Company' => 'Company',
+                ])->default('Individual')->disablePlaceholderSelection()
+                ->columnSpan([
+                    'md' => 4,
                 ]),
                 Select::make('status')->label('Status')
                 ->options([
@@ -66,12 +85,8 @@ class CategoryResource extends Resource
                     '0' => 'Inactive',
                 ])->default('1')->disablePlaceholderSelection()
                 ->columnSpan([
-                    'md' => 12,
-                ]),
-                FileUpload::make('image')->label('Image')
-                ->columnSpan([
-                    'md' => 12,
-                ]),
+                    'md' => 4,
+                ])
             ])
             ->columns([
                 'md' => 12
@@ -84,11 +99,9 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image')->label('Image')->defaultImageUrl(url('/assets/img/category.svg'))->circular(),
-                TextColumn::make('name')->label(__('panel.name'))
+                TextColumn::make('name')->label('Name')
                 ->icon('heroicon-o-document-text')->sortable()->searchable(),
-                TextColumn::make('slug')->label(__('panel.slug'))->limit(20)->sortable()->searchable(),
-                TextColumn::make('category.name')->default('Parent')->label('Category'),
+                TextColumn::make('type')->label('Type'),
                 IconColumn::make('status')
                 ->label(__('panel.status'))->boolean()
                 ->trueIcon('heroicon-o-badge-check')
@@ -140,7 +153,7 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/')
+            'index' => Pages\ListCustomers::route('/')
         ];
     }    
 }

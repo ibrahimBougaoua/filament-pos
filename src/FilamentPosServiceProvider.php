@@ -10,6 +10,7 @@ use IbrahimBougaoua\FilamentPos\Resources\PriceGroupResource;
 use IbrahimBougaoua\FilamentPos\Resources\VariationResource;
 use IbrahimBougaoua\FilamentPos\Resources\UnitResource;
 use IbrahimBougaoua\FilamentPos\Resources\ProductResource;
+use IbrahimBougaoua\FilamentPos\Resources\CustomerResource;
 use Spatie\LaravelPackageTools\Package;
 
 class FilamentPosServiceProvider extends PluginServiceProvider
@@ -21,6 +22,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
         PriceGroupResource::class,
         VariationResource::class,
         ProductResource::class,
+        CustomerResource::class,
     ];
     
     public function configurePackage(Package $package): void

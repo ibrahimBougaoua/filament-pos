@@ -80,5 +80,22 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('customers', function (Blueprint $table) {
+            $table->id();
+            $table->string("name")->nullable();
+            $table->enum("civility",['M', 'Mme', 'Mlle'])->default('M');
+            $table->string("first_name")->nullable();
+            $table->string("last_name")->nullable();
+            $table->string("email")->nullable();
+            $table->text("address_line_1")->nullable();
+            $table->text("address_line_2")->nullable();
+            $table->string("mobile")->nullable();
+            $table->boolean("status")->default(false);
+            $table->enum("type",['Individual', 'Company'])->default('Individual');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
     }
 };

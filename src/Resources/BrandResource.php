@@ -59,8 +59,8 @@ class BrandResource extends Resource
             ->filters([
                 Filter::make('created_at')
                 ->label(__('panel.created_at'))->form([
-                    Forms\Components\DatePicker::make('created_from')->label(__('panel.created_from')),
-                    Forms\Components\DatePicker::make('created_until')->label(__('panel.created_until')),
+                    Forms\Components\DatePicker::make('created_from')->label('Created from'),
+                    Forms\Components\DatePicker::make('created_until')->label('Created until'),
                 ])
                 ->query(function (Builder $query, array $data): Builder {
                     return $query

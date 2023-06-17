@@ -2,6 +2,7 @@
 
 namespace IbrahimBougaoua\FilamentPos\Resources;
 
+use Filament\Forms\Components\Repeater;
 use IbrahimBougaoua\FilamentPos\Resources\VariationResource\Pages;
 use IbrahimBougaoua\FilamentPos\Models\Variation;
 use Filament\Forms;
@@ -34,11 +35,28 @@ class VariationResource extends Resource
                 ->columnSpan([
                     'md' => 12,
                 ]),
+                Repeater::make('values')
+                ->relationship('values')
+                ->schema([
+                    Forms\Components\Card::make()
+                    ->schema([
+                        TextInput::make('value')
+                        ->label('Value')
+                        ->required()
+                        ->columnSpan([
+                            'md' => 12,
+                        ]),
+                    ])
+                    ->columns([
+                        'md' => 12
+                    ])
+                    ->columnSpan('full'),
             ])
             ->columns([
                 'md' => 12
             ])
             ->columnSpan('full'),
+            ]),
         ]);
     }
 
@@ -47,6 +65,7 @@ class VariationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Name')->icon('heroicon-o-document-text')->sortable()->searchable(),
+                TextColumn::make('values.value'),
                 TextColumn::make('created_at')->label('Created At'),
             ])
             ->filters([

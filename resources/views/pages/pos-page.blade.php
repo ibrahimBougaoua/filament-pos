@@ -17,8 +17,10 @@
                     <div class="grid grid-cols-3 gap-4 px-5 py-6 mt-5 overflow-y-auto h-3/4">
                         @foreach ($products as $key => $prduct)
                             <x-filament-pos::left-section.product 
+                                :id="$prduct->id"
                                 :name="$prduct->name"
                                 :image="$prduct->image" 
+                                :description="$prduct->description" 
                                 :brand="$prduct->brand->name" 
                                 :currency="$currency"
                                 :price="$prduct->price"
@@ -48,11 +50,26 @@
                 <!-- header -->
                 <x-filament-pos::right-section.header />
                 <!-- end header -->
+                <div class="px-5 py-4 mt-5 overflow-y-auto h-64">
+                    <div class="p-2  bg-success-500 rounded-md shadow-lg">
+                        <p class="text-white text-center p-6 text-xl ordinal slashed-zero tabular-nums" style="font-size: 4em;">
+                            {{ $total }} {{ $currency }}
+                        </p>
+                    </div>
+                </div>
                 <!-- order list -->
                 <div class="px-5 py-4 mt-5 overflow-y-auto h-64">
-                    <div class="p-2 rounded-md shadow-lg">
+                    <div class="p-2 rounded-md shadow">
                         @forelse ($selected_products as $key => $prduct)
-                            <x-filament-pos::right-section.order-list :key="$key"/>
+                            <x-filament-pos::right-section.order-list 
+                                :key="$key"
+                                :name="$prduct['name']"
+                                :image="$prduct['image']"
+                                :description="$prduct['description']"
+                                :currency="$currency"
+                                :price="$prduct['price']"
+                                wire:key="$key"
+                                />
                         @empty
                             <div class="filament-tables-empty-state mx-auto flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
                                 <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">
@@ -66,16 +83,28 @@
                                         </g>
                                     </svg>
                                 </div>
+                                <p class="text-center p-6 text-xl ordinal slashed-zero tabular-nums">
+                                    No Item selected
+                                </p>
                             </div>
                         @endforelse
                     </div>
                 </div>
                 <!-- end order list -->
                 <!-- totalItems -->
-                <x-filament-pos::right-section.total-items />
+                <x-filament-pos::right-section.total-items 
+                :currency="$currency"
+                :subtotal="$subtotal"
+                :discount="$discount"
+                :tax="$tax"
+                :total="$total"
+                />
                 <!-- end total -->
                 <!-- cash -->
-                <x-filament-pos::right-section.cash />
+                <x-filament-pos::right-section.cash 
+                :currency="$currency"
+                :total="$total"
+                />
                 <!-- end cash -->
                 <!-- button pay-->
                 <x-filament-pos::right-section.button-pay />
@@ -85,3 +114,30 @@
         </div>
     </div>
 </x-filament::page>
+
+@push('scripts')
+<script>
+    document.addEventListener('livewire:load', function () { 
+        @this.on('fireCancel', el => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.cancel()
+                    Swal.fire(
+                    'Canceled !',
+                    'Items has been deleted.',
+                    'success'
+                    )
+                }
+            })
+        })
+    })
+</script>
+@endpush

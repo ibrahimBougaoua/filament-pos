@@ -22,6 +22,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
 
     protected array $beforeCoreScripts = [
         'pos-scripts' => __DIR__.'/../dist/js/scripts.js',
+        'pos-sweetalert2' => __DIR__.'/../dist/js/sweetalert2.js',
     ];
 
     protected array $resources = [

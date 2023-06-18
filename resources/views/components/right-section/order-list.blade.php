@@ -1,21 +1,23 @@
 @props([
     'key' => null,
-    'title' => 'Product Name',
+    'name' => 'Product Name',
     'description' => 'Product Description',
-    'qty' => 1,
+    'image' => null,
+    'currency' => null,
     'price' => 999.00,
+    'qty' => 1,
 ])
 
-<div class="flex flex-row justify-between items-center mb-4 px-2 p-1 cursor-pointer rounded-xl  hover:bg-gray-500/5 focus:bg-gray-500/5">
+<div class="flex flex-row justify-between items-center overflow-y-auto h-32 mb-4 px-2 p-1 cursor-pointer rounded-xl  hover:bg-gray-500/5 focus:bg-gray-500/5">
     <div class="flex flex-row items-center w-2/5">
-        <img src="https://source.unsplash.com/4u_nRgiLW3M/600x600"
-            class="w-10 h-10 object-cover rounded-md" alt="">
-        <span class="ml-4 font-semibold text-sm">{{ $title }}</span>
+        <img src="storage/{{ $image }}"
+            class="w-10 h-10 object-cover rounded-md" alt="{{ $name }}">
+        <span class="ml-4 font-semibold text-sm">{{ $name }}</span>
     </div>
     <div class="w-32 flex justify-between">
-        <span class="px-3 py-1 rounded-md bg-gray-300 ">-</span>
+        <span class="px-3 py-1 rounded-md bg-gray-300" wire:click="qtyDec({{ $key }})">-</span>
         <span class="font-semibold mx-4">{{ $qty }}</span>
-        <span class="px-3 py-1 rounded-md bg-gray-300 ">+</span>
+        <span class="px-3 py-1 rounded-md bg-gray-300" wire:click="qtyInc({{ $key }})">+</span>
     </div>
     <div class="font-semibold text-lg w-16 text-center">
         {{ $price }}

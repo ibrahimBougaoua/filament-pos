@@ -6,6 +6,8 @@ use Filament\Forms\Components\Component;
 
 class OrderList extends Component
 {
+    protected $listeners = ['refreshComponent' => '$refresh'];
+    
     protected array $items = [];
 
     public function getItems(): array

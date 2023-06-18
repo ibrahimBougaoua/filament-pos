@@ -29,6 +29,14 @@ class PosPage extends Page
         $this->all_products();
     }
 
+    public function getProductsByCategory($cate_id = null)
+    {
+        if( ! empty($cate_id) )
+            $this->products = Product::where('cate_id',$cate_id)->get();
+        else
+            $this->all_products();
+    }
+
     public function updatedSearch()
     {
         if( ! empty($this->search) )

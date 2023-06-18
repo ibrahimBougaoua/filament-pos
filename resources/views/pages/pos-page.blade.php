@@ -1,8 +1,8 @@
 <x-filament::page>
     <div class="rounded bg-white shadow-inner">
-        <div class="flex lg:flex-row flex-col-reverse shadow-lg">
+        <div class="flex lg:flex-row flex-col-reverse shadow">
             <!-- left section -->
-            <div class="p-3 lg:w-3/5 w-3/5 min-h-screen shadow-lg">
+            <div class="p-3 lg:w-3/5 w-3/5 min-h-screen">
                 <!-- header -->
                 <x-filament-pos::left-section.header />
                 <!-- end header -->
@@ -14,7 +14,7 @@
                 <!-- end search -->
                 <!-- products -->
                 @if($products)
-                    <div class="grid grid-cols-3 gap-4 px-5 py-6 mt-5 overflow-y-auto h-3/4">
+                    <div class="grid grid-cols-3 gap-3 px-2 py-2 overflow-y-auto h-3/4 shadow">
                         @foreach ($products as $key => $prduct)
                             <x-filament-pos::left-section.product 
                                 :id="$prduct->id"
@@ -28,7 +28,7 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="filament-tables-empty-state mx-auto flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
+                    <div class="filament-tables-empty-state mx-auto shadow flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
                         <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="150" height="150">
                                 <path fill="#607D8B" d="M13.1,33c-0.7,0-1.2-0.5-1.3-1.2L9.2,9.7C9,8.1,7.7,7,6.2,7H5v2h1.2c0.5,0,0.9,0.4,1,0.9l2.6,22.2c0.2,1.7,1.6,2.9,3.3,2.9H24v-2H13.1z" />
@@ -47,16 +47,16 @@
             <!-- end left section -->
             <!-- right section -->
             <div class="p-3 lg:w-2/5 w-2/5">
+                <x-filament-pos::right-section.customer-banner
+                :currency="$currency"
+                :total="$total" 
+                />
                 <!-- header -->
-                <x-filament-pos::right-section.header />
+                <x-filament-pos::right-section.header
+                :currency="$currency"
+                :total="$total" 
+                />
                 <!-- end header -->
-                <div class="px-5 py-4 mt-5 overflow-y-auto h-64">
-                    <div class="p-2  bg-success-500 rounded-md shadow-lg">
-                        <p class="text-white text-center p-6 text-xl ordinal slashed-zero tabular-nums" style="font-size: 4em;">
-                            {{ $total }} {{ $currency }}
-                        </p>
-                    </div>
-                </div>
                 <!-- order list -->
                 <div class="px-5 py-4 mt-5 overflow-y-auto h-64">
                     <div class="p-2 rounded-md shadow">
@@ -113,6 +113,13 @@
             <!-- end right section -->
         </div>
     </div>
+    <audio id="audio_play_delete" src="{{ asset('/account/assets/wav/delete.wav') }}"></audio>
+    <audio id="audio_play_success" src="{{ asset('/dist/sound/success.wav') }}"></audio>
+    <audio id="audio_play_restore" src="{{ asset('/account/assets/wav/restore.wav') }}"></audio>
+    <audio id="audio_play_choose" src="{{ asset('/account/assets/wav/choose.wav') }}"></audio>
+    <audio id="audio_play_error" src="{{ asset('/account/assets/wav/error.wav') }}"></audio>
+    <audio src="../dist/sound/success.wav" controls></audio>
+
 </x-filament::page>
 
 @push('scripts')
@@ -137,6 +144,38 @@
                     )
                 }
             })
+        })
+
+        @this.on('audio_play_delete', value => {
+            if(value)
+            {
+                var audio = document.getElementById("audio_play_delete");
+                audio.play();
+            }
+        })
+        
+        @this.on('audio_play_success', value => {
+            if(value)
+            {
+                var success = new Audio('/filament/assets/success.wav');
+                success.play();
+            }
+        })
+
+        @this.on('audio_play_choose', value => {
+            if(value)
+            {
+                var audio = document.getElementById("audio_play_choose");
+                audio.play();
+            }
+        })
+
+        @this.on('audio_play_error', value => {
+            if(value)
+            {
+                var audio = document.getElementById("audio_play_error");
+                audio.play();
+            }
         })
     })
 </script>

@@ -20,7 +20,7 @@
         <span class="px-3 py-1 rounded-md bg-gray-300" wire:click="qtyInc({{ $key }})">+</span>
     </div>
     <div class="font-semibold text-lg w-16 text-center">
-        {{ $price }}
+        {{ number_format($price,2) }}
     </div>
         <div wire:click="removeProduct({{ $key }})" class="px-2 py-1 cursor-pointer rounded-md shadow-lg text-center text-white">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">

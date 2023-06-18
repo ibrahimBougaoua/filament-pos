@@ -16,7 +16,7 @@
         <span class="font-light text-sm text-gray-400 reak-keep">{{ $brand }}</span>
     </div>
     <div class="flex flex-row justify-between items-center">
-        <span class="self-end font-bold text-lg text-yellow-500">{{ $price }} {{ $currency }}</span>
+        <span class="self-end font-bold text-lg text-yellow-500">{{ number_format($price,2) }} {{ $currency }}</span>
         <img src="storage/{{ $image }}" class=" h-14 w-14 object-cover rounded-md" alt="{{ $name }}">
     </div>
 </div>

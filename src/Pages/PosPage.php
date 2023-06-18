@@ -2,6 +2,7 @@
 
 namespace IbrahimBougaoua\FilamentPos\Pages;
 
+use Filament\Forms\Components\TextInput;
 use IbrahimBougaoua\FilamentPos\Models\Category;
 use IbrahimBougaoua\FilamentPos\Models\Product;
 use Illuminate\Contracts\View\View;
@@ -74,6 +75,8 @@ class PosPage extends Page
             $this->selected_products[$id]['qty']++;
             
         $this->total();
+        
+        $this->emit('audio_play_success', true);
     }
 
     public function removeProduct($index)
@@ -124,15 +127,5 @@ class PosPage extends Page
         }
 
         // Optionally, you can display a success message or perform any other desired action
-    }
-
-    protected function getHeader(): View
-    {
-        return view('filament-pos::components.right-section.header');
-    }
-
-    protected function getFooter(): View
-    {
-        return view('filament-pos::components.right-section.header');
     }
 }

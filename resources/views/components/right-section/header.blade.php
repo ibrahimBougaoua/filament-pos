@@ -1,8 +1,12 @@
+@props([
+    'currency' => null,
+    'total' => 0
+])
 
-<div class="flex flex-row items-center justify-between px-5 mt-5">
-    <div class="text-xl px-5 p-2 border cursor-pointer shadow-lg rounded-2xl font-semibold mr-4 hover:bg-gray-500/5 focus:bg-gray-500/5">Current Order</div>
-    <div class="font-semibold">
-        <span class="px-4 py-2 rounded-md cursor-pointer bg-danger-500 text-white" wire:click="$emit('fireCancel')">Clear All</span>
-        <span class="px-4 py-2 rounded-md cursor-pointer bg-success-500 text-white">Setting</span>
+<div class="px-5 overflow-y-auto h-64">
+    <div class="p-2  bg-success-500 rounded-md shadow-lg">
+        <p class="text-white text-center p-6 text-xl ordinal slashed-zero tabular-nums" style="font-size: 4em;">
+            {{ number_format($total,2) }} {{ $currency }}
+        </p>
     </div>
 </div>

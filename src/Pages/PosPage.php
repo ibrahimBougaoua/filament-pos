@@ -5,6 +5,8 @@ namespace IbrahimBougaoua\FilamentPos\Pages;
 use Filament\Forms\Components\TextInput;
 use IbrahimBougaoua\FilamentPos\Models\Category;
 use IbrahimBougaoua\FilamentPos\Models\Product;
+use IbrahimBougaoua\FilamentPos\Widgets\Footer;
+use IbrahimBougaoua\FilamentPos\Widgets\Header;
 use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
 use Illuminate\Support\Arr;
@@ -12,6 +14,8 @@ use Illuminate\Support\Arr;
 class PosPage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string $layout = 'filament-pos::components.layouts.app';
 
     protected static string $view = 'filament-pos::pages.pos-page';
     
@@ -111,7 +115,12 @@ class PosPage extends Page
         foreach($this->selected_products as $item)
             $this->total += $item['price'] * $item['qty'];
     }
-
+    
+    protected function getHeader(): ?View
+    {
+        return view('filament-pos::components.layouts.header');
+    }
+    
     public function submit()
     {
         foreach ($this->selected_products as $productData) {

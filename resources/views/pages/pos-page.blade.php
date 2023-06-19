@@ -1,5 +1,5 @@
 <x-filament::page>
-    <div class="rounded bg-white shadow-inner">
+    <div class="rounded bg-white shadow-inner fullscreen-element">
         <div class="flex lg:flex-row flex-col-reverse shadow">
             <!-- left section -->
             <div class="p-3 lg:w-3/5 w-3/5 min-h-screen">
@@ -14,7 +14,7 @@
                 <!-- end search -->
                 <!-- products -->
                 @if($products)
-                    <div class="grid grid-cols-3 gap-3 px-2 py-2 overflow-y-auto h-3/4 shadow">
+                    <div class="grid grid-cols-4 gap-3 py-2 overflow-y-auto h-3/4">
                         @foreach ($products as $key => $prduct)
                             <x-filament-pos::left-section.product 
                                 :id="$prduct->id"
@@ -113,13 +113,6 @@
             <!-- end right section -->
         </div>
     </div>
-    <audio id="audio_play_delete" src="{{ asset('/account/assets/wav/delete.wav') }}"></audio>
-    <audio id="audio_play_success" src="{{ asset('/dist/sound/success.wav') }}"></audio>
-    <audio id="audio_play_restore" src="{{ asset('/account/assets/wav/restore.wav') }}"></audio>
-    <audio id="audio_play_choose" src="{{ asset('/account/assets/wav/choose.wav') }}"></audio>
-    <audio id="audio_play_error" src="{{ asset('/account/assets/wav/error.wav') }}"></audio>
-    <audio src="../dist/sound/success.wav" controls></audio>
-
 </x-filament::page>
 
 @push('scripts')

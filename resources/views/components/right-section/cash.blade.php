@@ -3,7 +3,7 @@
     'total' => 0
 ])
 
-<div class="px-5 my-6">
+<div class="my-6">
     <div class="rounded-md shadow-lg px-4 py-4">
         <div class="flex flex-row justify-between items-center">
             <div class="flex flex-col">

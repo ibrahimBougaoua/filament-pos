@@ -121,6 +121,11 @@ class PosPage extends Page
         return view('filament-pos::components.layouts.header');
     }
     
+    protected function getFooter(): ?View
+    {
+        return view('filament-pos::components.layouts.footer');
+    }
+    
     public function submit()
     {
         foreach ($this->selected_products as $productData) {

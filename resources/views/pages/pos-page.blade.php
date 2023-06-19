@@ -1,8 +1,8 @@
 <x-filament::page>
-    <div class="rounded bg-white shadow-inner fullscreen-element">
+    <div class="rounded shadow-inner fullscreen-element">
         <div class="flex lg:flex-row flex-col-reverse shadow">
             <!-- left section -->
-            <div class="p-3 lg:w-3/5 w-3/5 min-h-screen">
+            <div class="bg-white p-3 mx-2 lg:w-3/5 w-3/5 min-h-screen">
                 <!-- header -->
                 <x-filament-pos::left-section.header />
                 <!-- end header -->
@@ -46,7 +46,7 @@
             </div>
             <!-- end left section -->
             <!-- right section -->
-            <div class="p-3 lg:w-2/5 w-2/5">
+            <div class="bg-white p-3 mx-2 lg:w-2/5 w-2/5">
                 <x-filament-pos::right-section.customer-banner
                 :currency="$currency"
                 :total="$total" 
@@ -58,7 +58,7 @@
                 />
                 <!-- end header -->
                 <!-- order list -->
-                <div class="px-5 py-4 mt-5 overflow-y-auto h-64">
+                <div class="py-4 mt-5">
                     <div class="p-2 rounded-md shadow">
                         @forelse ($selected_products as $key => $prduct)
                             <x-filament-pos::right-section.order-list 
@@ -120,7 +120,7 @@
     document.addEventListener('livewire:load', function () { 
         @this.on('fireCancel', el => {
             Swal.fire({
-                title: 'Are you sure?',
+                title: 'Are you sure ?',
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,

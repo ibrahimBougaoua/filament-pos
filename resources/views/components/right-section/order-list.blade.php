@@ -8,7 +8,7 @@
     'qty' => 1,
 ])
 
-<div class="flex flex-row justify-between items-center overflow-y-auto h-32 mb-4 px-2 p-1 cursor-pointer rounded-xl  hover:bg-gray-500/5 focus:bg-gray-500/5">
+<div class="flex flex-row justify-between items-center overflow-y-auto h-32 mb-4 p-1 cursor-pointer rounded-xl  hover:bg-gray-500/5 focus:bg-gray-500/5">
     <div class="flex flex-row items-center w-2/5">
         <img src="storage/{{ $image }}"
             class="w-10 h-10 object-cover rounded-md" alt="{{ $name }}">

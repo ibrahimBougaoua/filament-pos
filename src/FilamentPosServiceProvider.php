@@ -2,6 +2,7 @@
 
 namespace IbrahimBougaoua\FilamentPos;
 
+use Filament\Navigation\UserMenuItem;
 use Filament\PluginServiceProvider;
 use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
 use IbrahimBougaoua\FilamentPos\Pages\PosPage;
@@ -38,6 +39,16 @@ class FilamentPosServiceProvider extends PluginServiceProvider
     protected array $pages = [
         PosPage::class,
     ];
+    
+    protected function getUserMenuItems(): array
+    {
+        return [
+            UserMenuItem::make()
+                ->label('Pos')
+                ->url(route('filament.pages.pos-page'))
+                ->icon('heroicon-s-cog'),
+        ];
+    }
     
     public function configurePackage(Package $package): void
     {

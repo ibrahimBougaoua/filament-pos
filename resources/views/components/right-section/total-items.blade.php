@@ -6,7 +6,7 @@
     'total' => 0
 ])
 
-<div class="px-5 mt-5">
+<div class="mt-5">
     <div class="py-4 rounded-md shadow">
         <div class=" px-4 flex justify-between ">
             <span class="font-semibold text-sm">Subtotal</span>

@@ -35,6 +35,8 @@ class PosPage extends Page
 
     public $products = [];
 
+    public $variations = [];
+    
     public $selected_products = [];
 
     public function mount()
@@ -64,28 +66,65 @@ class PosPage extends Page
         $this->products = Product::all();
     }
 
-    public function addProduct($id,$name,$image,$price,$description,$qty)
+    public function get_variations($product_id)
     {
+        $product = Product::find($product_id);
+
+        if($product)
+        {
+            $this->variations = $product->variations;
+        }
+    }
+
+    public function addProduct($id,$name,$image,$price,$description,$qty,$has_variations)
+    {
+        $this->get_variations($id);
+
         if( ! Arr::has($this->selected_products, $id) )
+        {
             $this->selected_products[$id] = [
                 'id' => $id,
                 'name' => $name,
                 'image' => $image,
                 'price' => $price,
                 'description' => $description,
-                'qty' => $qty
+                'qty' => $qty,
+                'variations' => [
+
+                ]
             ];
-        else
-            $this->selected_products[$id]['qty']++;
-            
+        } else {
+            if( $has_variations )
+            {
+                $value = [
+                    'id' => $id,
+                    'name' => $name,
+                    'image' => $image,
+                    'price' => $price,
+                    'description' => $description,
+                    'qty' => $qty,
+                ];
+                array_push($this->selected_products[$id]['variations'], $value);
+            } else {
+                $this->selected_products[$id]['qty']++;
+            }
+        }
+
         $this->total();
-        
+
         $this->emit('audio_play_success', true);
     }
 
     public function removeProduct($index)
     {
         unset($this->selected_products[$index]);
+        $this->selected_products = array_values($this->selected_products);
+        $this->total();
+    }
+
+    public function removeVariation($id,$index)
+    {
+        unset($this->selected_products[$id]['variations'][$index]);
         $this->selected_products = array_values($this->selected_products);
         $this->total();
     }

@@ -18,6 +18,7 @@ class Product extends Model
         "description",
         "price",
         "image",
+        "has_variations",
         "status",
         "cate_id",
         "unit_id",
@@ -32,6 +33,11 @@ class Product extends Model
             'description' => $this->description,
             'barcode_type' => $this->barcode_type,
         ];
+    }
+    
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class,"product_id");
     }
     
     public function category()

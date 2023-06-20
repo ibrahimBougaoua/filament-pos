@@ -2,7 +2,7 @@
     <div class="rounded shadow-inner fullscreen-element">
         <div class="flex lg:flex-row flex-col-reverse shadow">
             <!-- left section -->
-            <div class="bg-white p-3 mx-2 lg:w-3/5 w-3/5 min-h-screen">
+            <div class="bg-white rounded p-3 mx-2 w-4/5 min-h-screen">
                 <!-- header -->
                 <x-filament-pos::left-section.header />
                 <!-- end header -->
@@ -12,41 +12,87 @@
                 <!-- search -->
                 <x-filament-pos::left-section.search :search="$search"/>
                 <!-- end search -->
-                <!-- products -->
-                @if($products)
-                    <div class="grid grid-cols-4 gap-3 py-2 overflow-y-auto h-3/4">
-                        @foreach ($products as $key => $prduct)
-                            <x-filament-pos::left-section.product 
-                                :id="$prduct->id"
-                                :name="$prduct->name"
-                                :image="$prduct->image" 
-                                :description="$prduct->description" 
-                                :brand="$prduct->brand->name" 
-                                :currency="$currency"
-                                :price="$prduct->price"
-                            />
-                        @endforeach
+
+                <div class="flex lg:flex-row flex-col-reverse">
+                    <div class="w-4/5">
+                        <!-- products -->
+                        @if($products)
+                            <div class="grid grid-cols-3 gap-3 py-2 overflow-y-auto h-3/4">
+                                @foreach ($products as $key => $prduct)
+                                    <x-filament-pos::left-section.product 
+                                        :id="$prduct->id"
+                                        :name="$prduct->name"
+                                        :image="$prduct->image" 
+                                        :description="$prduct->description" 
+                                        :brand="$prduct->brand->name" 
+                                        :currency="$currency"
+                                        :price="$prduct->price"
+                                        :has_variations="$prduct->has_variations"
+                                    />
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="filament-tables-empty-state mx-auto shadow flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
+                                <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="150" height="150">
+                                        <path fill="#607D8B" d="M13.1,33c-0.7,0-1.2-0.5-1.3-1.2L9.2,9.7C9,8.1,7.7,7,6.2,7H5v2h1.2c0.5,0,0.9,0.4,1,0.9l2.6,22.2c0.2,1.7,1.6,2.9,3.3,2.9H24v-2H13.1z" />
+                                        <path fill="#FFC107" d="M14 31H43V35H14z" />
+                                        <path fill="#37474F" d="M38 35A3 3 0 1 0 38 41 3 3 0 1 0 38 35zM19 35A3 3 0 1 0 19 41 3 3 0 1 0 19 35z" />
+                                        <path fill="#607D8B" d="M38 37A1 1 0 1 0 38 39 1 1 0 1 0 38 37zM19 37A1 1 0 1 0 19 39 1 1 0 1 0 19 37z" />
+                                        <path fill="#FF9800" d="M38,31H18c-1.1,0-2-0.9-2-2V9c0-1.1,0.9-2,2-2h20c1.1,0,2,0.9,2,2v20C40,30.1,39.1,31,38,31z" />
+                                        <path fill="#8A5100" d="M30 11h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 10.6 30.6 11 30 11zM30 24h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 23.6 30.6 24 30 24z" />
+                                        <path fill="#C77600" d="M16 18H40V20H16z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        @endif
+                        <!-- end products -->
                     </div>
-                @else
-                    <div class="filament-tables-empty-state mx-auto shadow flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
-                        <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="150" height="150">
-                                <path fill="#607D8B" d="M13.1,33c-0.7,0-1.2-0.5-1.3-1.2L9.2,9.7C9,8.1,7.7,7,6.2,7H5v2h1.2c0.5,0,0.9,0.4,1,0.9l2.6,22.2c0.2,1.7,1.6,2.9,3.3,2.9H24v-2H13.1z" />
-                                <path fill="#FFC107" d="M14 31H43V35H14z" />
-                                <path fill="#37474F" d="M38 35A3 3 0 1 0 38 41 3 3 0 1 0 38 35zM19 35A3 3 0 1 0 19 41 3 3 0 1 0 19 35z" />
-                                <path fill="#607D8B" d="M38 37A1 1 0 1 0 38 39 1 1 0 1 0 38 37zM19 37A1 1 0 1 0 19 39 1 1 0 1 0 19 37z" />
-                                <path fill="#FF9800" d="M38,31H18c-1.1,0-2-0.9-2-2V9c0-1.1,0.9-2,2-2h20c1.1,0,2,0.9,2,2v20C40,30.1,39.1,31,38,31z" />
-                                <path fill="#8A5100" d="M30 11h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 10.6 30.6 11 30 11zM30 24h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 23.6 30.6 24 30 24z" />
-                                <path fill="#C77600" d="M16 18H40V20H16z" />
-                            </svg>
+                    <div class="w-1/5 px-2 mt-2">
+                        <div class="overflow-y-autoh-64">
+                            <div class="p-2 bg-danger-500 rounded-md shadow-lg">
+                                <p class="text-white text-center p-2 ordinal slashed-zero tabular-nums">
+                                    Variations
+                                </p>
+                            </div>
                         </div>
+                        <!-- variations -->
+                        @if(count($variations))
+                            <div class="grid grid-cols-1 gap-1 mt-2 py-2 overflow-y-auto h-3/4">
+                                @foreach ($variations as $key => $variation)
+                                    <x-filament-pos::left-section.variation 
+                                        :id="$variation->product_id"
+                                        :name="$variation->name"
+                                        :image="$variation->image" 
+                                        :description="$variation->product->description" 
+                                        :brand="$variation->product->brand->name" 
+                                        :currency="$currency"
+                                        :price="$variation->default_sell_price"
+                                    />
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="filament-tables-empty-state mx-auto shadow flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
+                                <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="150" height="150">
+                                        <path fill="#607D8B" d="M13.1,33c-0.7,0-1.2-0.5-1.3-1.2L9.2,9.7C9,8.1,7.7,7,6.2,7H5v2h1.2c0.5,0,0.9,0.4,1,0.9l2.6,22.2c0.2,1.7,1.6,2.9,3.3,2.9H24v-2H13.1z" />
+                                        <path fill="#FFC107" d="M14 31H43V35H14z" />
+                                        <path fill="#37474F" d="M38 35A3 3 0 1 0 38 41 3 3 0 1 0 38 35zM19 35A3 3 0 1 0 19 41 3 3 0 1 0 19 35z" />
+                                        <path fill="#607D8B" d="M38 37A1 1 0 1 0 38 39 1 1 0 1 0 38 37zM19 37A1 1 0 1 0 19 39 1 1 0 1 0 19 37z" />
+                                        <path fill="#FF9800" d="M38,31H18c-1.1,0-2-0.9-2-2V9c0-1.1,0.9-2,2-2h20c1.1,0,2,0.9,2,2v20C40,30.1,39.1,31,38,31z" />
+                                        <path fill="#8A5100" d="M30 11h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 10.6 30.6 11 30 11zM30 24h-4c-.6 0-1-.4-1-1v0c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v0C31 23.6 30.6 24 30 24z" />
+                                        <path fill="#C77600" d="M16 18H40V20H16z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        @endif
+                        <!-- end variations -->
                     </div>
-                @endif
-                <!-- end products -->
+                </div>
             </div>
             <!-- end left section -->
             <!-- right section -->
-            <div class="bg-white p-3 mx-2 lg:w-2/5 w-2/5">
+            <div class="bg-white rounded p-3 mx-2 w-2/5">
                 <x-filament-pos::right-section.customer-banner
                 :currency="$currency"
                 :total="$total" 
@@ -61,15 +107,16 @@
                 <div class="py-4 mt-5">
                     <div class="p-2 rounded-md shadow">
                         @forelse ($selected_products as $key => $prduct)
-                            <x-filament-pos::right-section.order-list 
-                                :key="$key"
-                                :name="$prduct['name']"
-                                :image="$prduct['image']"
-                                :description="$prduct['description']"
-                                :currency="$currency"
-                                :price="$prduct['price']"
-                                wire:key="$key"
-                                />
+                                <x-filament-pos::right-section.order-list 
+                                    :key="$key"
+                                    :name="$prduct['name']"
+                                    :image="$prduct['image']"
+                                    :description="$prduct['description']"
+                                    :currency="$currency"
+                                    :price="$prduct['price']"
+                                    :variations="$prduct['variations']"
+                                    wire:key="$key"
+                                    />
                         @empty
                             <div class="filament-tables-empty-state mx-auto flex flex-1 flex-col items-center justify-center space-y-6 bg-white p-6">
                                 <div class="flex h-50 w-50 p-3 items-center justify-center text-center rounded-full bg-primary-50 text-primary-500">

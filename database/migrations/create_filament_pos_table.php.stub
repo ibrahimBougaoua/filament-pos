@@ -71,6 +71,7 @@ return new class extends Migration
             $table->enum("barcode_type",['C39','C128','EAN13','EAN8','UPCA','UPCE'])->default('C128');
             $table->decimal('price', 8, 2)->nullable();
             $table->string("image")->nullable();
+            $table->boolean("has_variations")->default(false);
             $table->boolean("status")->default(false);
             $table->unsignedBigInteger('cate_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
@@ -78,6 +79,26 @@ return new class extends Migration
             $table->foreign('cate_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('product_variations', function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("sku");
+            $table->decimal('default_purchase_price', 22, 4)->nullable();
+            $table->decimal('dpp_inc_tax', 22, 4)->nullable();
+            $table->decimal('profit_percent', 22, 4)->nullable();
+            $table->decimal('default_sell_price', 22, 4)->nullable();
+            $table->decimal('sell_price_inc_tax', 22, 4)->nullable();
+            $table->string("image")->nullable();
+            $table->unsignedBigInteger('variation_value_id')->nullable();
+            $table->unsignedBigInteger('product_variation_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreign('variation_value_id')->references('id')->on('variation_values')->onDelete('cascade');
+            $table->foreign('product_variation_id')->references('id')->on('variations')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

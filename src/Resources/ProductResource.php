@@ -2,6 +2,7 @@
 
 namespace IbrahimBougaoua\FilamentPos\Resources;
 
+use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\ImageColumn;
 use IbrahimBougaoua\FilamentPos\Models\Brand;
 use IbrahimBougaoua\FilamentPos\Models\Category;
@@ -143,6 +144,71 @@ class ProductResource extends Resource
                 'md' => 12
             ])
             ->columnSpan('full'),
+
+            Forms\Components\Card::make()
+            ->schema([
+                Forms\Components\Placeholder::make('variations'),
+                Repeater::make('variations')
+                ->relationship()
+                ->schema([
+                    TextInput::make('sku')
+                    ->label('sku')
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('value')
+                    ->label('value')
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('default_purchase_price')
+                    ->label('default_purchase_price')
+                    ->numeric()
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('dpp_inc_tax')
+                    ->label('dpp_inc_tax')
+                    ->numeric()
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('profit_percent')
+                    ->label('profit_percent')
+                    ->numeric()
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('default_sell_price')
+                    ->label('default_sell_price')
+                    ->numeric()
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    TextInput::make('sell_price_inc_tax')
+                    ->label('sell_price_inc_tax')
+                    ->numeric()
+                    ->required()
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                    FileUpload::make('image')->label('Image')
+                    ->columnSpan([
+                        'md' => 3,
+                    ]),
+                ])
+                ->columns([
+                    'md' => 12
+                ])
+            ])
+            ->columnSpan('full'),
+            
         ]);
     }
 

@@ -9,7 +9,6 @@
             <a class="px-4 py-2 rounded-md cursor-pointer bg-gray-500 text-white" href="route('')">Categories</a>
             <a class="px-4 py-2 rounded-md cursor-pointer bg-gray-500 text-white" href="route('')">Products</a>
             <a class="px-4 py-2 rounded-md cursor-pointer bg-gray-500 text-white" href="route('')">Customers</a>
-            <span class="px-4 py-2 rounded-md cursor-pointer bg-primary-500 text-white">Hold</span>
             <span class="px-4 py-2 rounded-md cursor-pointer bg-success-500 text-white">Setting</span>
         </div>
     </div>

@@ -5,11 +5,9 @@
         </a>
         <div class="flex items-center">
             <ul class="flex">
-               <li>
-                    <a class="px-4 py-2 rounded-md cursor-pointer bg-gray-500 text-white" href="{{ route('filament.pages.dashboard') }}">
-                        Dashboard
-                    </a>
-               </li>
+                <li>
+                    <x-filament-pos::hold-list :hold_selected_products="$hold_selected_products" :count_items="count($hold_selected_products)"/>
+                </li>
             </ul>
             <div>
                 <x-filament::layouts.app.topbar.user-menu />

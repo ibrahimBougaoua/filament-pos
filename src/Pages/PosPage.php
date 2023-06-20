@@ -39,6 +39,8 @@ class PosPage extends Page
     
     public $selected_products = [];
 
+    public $hold_selected_products = [];
+
     public function mount()
     {
         $this->categories = Category::limit(6)->get();
@@ -155,9 +157,45 @@ class PosPage extends Page
             $this->total += $item['price'] * $item['qty'];
     }
     
+    public function add_to_hold_list()
+    {
+        if( count($this->selected_products) > 0 )
+        {
+            array_push($this->hold_selected_products,$this->selected_products);
+            $this->cancel();
+        }
+    }
+    
+    public function hold_out_from_hold_list($key)
+    {
+        if( count($this->hold_selected_products) > 0 )
+        {
+            if( count($this->selected_products) == 0 )
+            {
+                $this->selected_products = $this->hold_selected_products[$key];
+                $this->removeHoldList($key);
+                $this->total();
+            }
+        }
+    }
+    
+    public function removeHoldList($index)
+    {
+        unset($this->hold_selected_products[$index]);
+        $this->hold_selected_products = array_values($this->hold_selected_products);
+    }
+    
+    public function removeHoldListItem($id,$index)
+    {
+        unset($this->hold_selected_products[$id][$index]);
+        $this->hold_selected_products = array_values($this->hold_selected_products);
+    }
+
     protected function getHeader(): ?View
     {
-        return view('filament-pos::components.layouts.header');
+        return view('filament-pos::components.layouts.header',[
+            'hold_selected_products' => $this->hold_selected_products
+        ]);
     }
     
     protected function getFooter(): ?View

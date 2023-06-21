@@ -186,6 +186,31 @@
             })
         })
 
+        @this.on('error', value => {
+            if(value)
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: value,
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
+            }
+        })
+
+        @this.on('success', value => {
+            if(value)
+            {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: value,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
         @this.on('audio_play_delete', value => {
             if(value)
             {

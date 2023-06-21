@@ -4,6 +4,7 @@ namespace IbrahimBougaoua\FilamentPos\Pages;
 
 use Filament\Forms\Components\TextInput;
 use IbrahimBougaoua\FilamentPos\Models\Category;
+use IbrahimBougaoua\FilamentPos\Models\Order;
 use IbrahimBougaoua\FilamentPos\Models\Product;
 use IbrahimBougaoua\FilamentPos\Widgets\Footer;
 use IbrahimBougaoua\FilamentPos\Widgets\Header;
@@ -205,18 +206,46 @@ class PosPage extends Page
     
     public function submit()
     {
-        foreach ($this->selected_products as $productData) {
-            // Perform any necessary data processing or validation here
-            // Access the submitted data using $productData['name'], $productData['price'], $productData['description']
+        try
+        {
+            if( count($this->selected_products) > 0 )
+            {
+                $order = Order::create([
+                    "ref_amount" => 0,
+                    "service_charge" => 0,
+                    "discount" => 0,
+                    "order_bill" => 0,
+                    "vat" => 0,
+                    "vat_system" => 0,
+                    "cgst" => 0,
+                    "sgst" => 0,
+                    "total_payable" => 0,
+                    "bill_distribution" => 0,
+                    "paid_amount" => 0,
+                    "return_amount" => 0,
+                    "is_paid" => false,
+                    "customer_id" => 1
+                ]);
+        
+                foreach ($this->selected_products as $productData) {
+                    $order->items()->create([
+                        "payment_method" => "Cash",
+                        "qty" => 0,
+                        "price" => 0,
+                        "product_id" => 1
+                    ]);
+                }
+                
+                $this->cancel();
 
-            // Insert the data into your database
-            Product::create([
-                'name' => $productData['name'],
-                'price' => $productData['price'],
-                'description' => $productData['description'],
-            ]);
+                $this->emit('success', 'Order has been approved');
+            } else {
+                $this->emit('error', 'Please select an item !');
+            }
+        } catch(\ErrorException $err)
+        {
+            // Error Swal event
         }
 
-        // Optionally, you can display a success message or perform any other desired action
     }
 }

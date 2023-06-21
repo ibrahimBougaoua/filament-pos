@@ -13,7 +13,7 @@
         <path fill="#B86D00" d="M31 30L29 33 33 33z" />
       </svg>
     </button>
-    <div x-show="open" class="sidebar w-2/5 shadow-lg" x-transition:enter="transition transform ease-in-out duration-300"
+    <div x-show="open" class="sidebar w-2/5 h-full shadow-lg" x-transition:enter="transition transform ease-in-out duration-300"
         x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
         x-transition:leave="transition transform ease-in-out duration-300" x-transition:leave-start="translate-x-0"
         x-transition:leave-end="translate-x-full">

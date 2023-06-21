@@ -6,6 +6,9 @@
         <div class="flex items-center">
             <ul class="flex">
                 <li>
+                    <x-filament-pos::order-histories :orders="$orders" :count_items="count($orders)"/>
+                </li>
+                <li>
                     <x-filament-pos::hold-list :hold_selected_products="$hold_selected_products" :count_items="count($hold_selected_products)"/>
                 </li>
             </ul>

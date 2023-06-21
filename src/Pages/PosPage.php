@@ -32,6 +32,8 @@ class PosPage extends Page
 
     public $search = "";
 
+    public $searchModel = "";
+
     public $categories = [];
 
     public $products = [];
@@ -42,10 +44,13 @@ class PosPage extends Page
 
     public $hold_selected_products = [];
 
+    public $orders = [];
+
     public function mount()
     {
         $this->categories = Category::limit(6)->get();
         $this->all_products();
+        $this->all_orders();
     }
 
     public function getProductsByCategory($cate_id = null)
@@ -62,6 +67,11 @@ class PosPage extends Page
             $this->products = Product::search($this->search)->get();
         else
             $this->all_products();
+    }
+    
+    public function all_orders()
+    {
+        $this->orders = Order::all();
     }
 
     public function all_products()
@@ -195,7 +205,8 @@ class PosPage extends Page
     protected function getHeader(): ?View
     {
         return view('filament-pos::components.layouts.header',[
-            'hold_selected_products' => $this->hold_selected_products
+            'hold_selected_products' => $this->hold_selected_products,
+            'orders' => $this->orders
         ]);
     }
     

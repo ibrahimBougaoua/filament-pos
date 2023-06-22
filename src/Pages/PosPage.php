@@ -2,12 +2,9 @@
 
 namespace IbrahimBougaoua\FilamentPos\Pages;
 
-use Filament\Forms\Components\TextInput;
 use IbrahimBougaoua\FilamentPos\Models\Category;
 use IbrahimBougaoua\FilamentPos\Models\Order;
 use IbrahimBougaoua\FilamentPos\Models\Product;
-use IbrahimBougaoua\FilamentPos\Widgets\Footer;
-use IbrahimBougaoua\FilamentPos\Widgets\Header;
 use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
 use Illuminate\Support\Arr;
@@ -174,6 +171,8 @@ class PosPage extends Page
         {
             array_push($this->hold_selected_products,$this->selected_products);
             $this->cancel();
+        } else {
+            $this->emit('error', 'Please select an item !');
         }
     }
     

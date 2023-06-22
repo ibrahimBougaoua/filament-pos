@@ -1,5 +1,5 @@
-<x-filament::page>
-    <div class="rounded shadow-inner fullscreen-element">
+<x-filament::page @class(['fullscreen-pos'])>
+    <div class="rounded shadow-inner">
         <div class="flex lg:flex-row flex-col-reverse shadow">
             <!-- left section -->
             <div class="bg-white rounded p-3 mx-2 w-4/5 min-h-screen">
@@ -214,32 +214,32 @@
         @this.on('audio_play_delete', value => {
             if(value)
             {
-                var audio = document.getElementById("audio_play_delete");
-                audio.play();
+                //var audio = document.getElementById("audio_play_delete");
+                //audio.play();
             }
         })
         
         @this.on('audio_play_success', value => {
             if(value)
             {
-                var success = new Audio('/filament/assets/success.wav');
-                success.play();
+                //var success = new Audio('/filament/assets/success.wav');
+                //success.play();
             }
         })
 
         @this.on('audio_play_choose', value => {
             if(value)
             {
-                var audio = document.getElementById("audio_play_choose");
-                audio.play();
+                //var audio = document.getElementById("audio_play_choose");
+                //audio.play();
             }
         })
 
         @this.on('audio_play_error', value => {
             if(value)
             {
-                var audio = document.getElementById("audio_play_error");
-                audio.play();
+                //var audio = document.getElementById("audio_play_error");
+                //audio.play();
             }
         })
     })

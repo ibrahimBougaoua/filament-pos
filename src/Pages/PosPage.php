@@ -2,11 +2,11 @@
 
 namespace IbrahimBougaoua\FilamentPos\Pages;
 
+use Filament\Pages\Page;
 use IbrahimBougaoua\FilamentPos\Models\Category;
 use IbrahimBougaoua\FilamentPos\Models\Order;
 use IbrahimBougaoua\FilamentPos\Models\Product;
 use Illuminate\Contracts\View\View;
-use Filament\Pages\Page;
 use Illuminate\Support\Arr;
 
 class PosPage extends Page
@@ -16,8 +16,8 @@ class PosPage extends Page
     protected static string $layout = 'filament-pos::components.layouts.app';
 
     protected static string $view = 'filament-pos::pages.pos-page';
-    
-    public $currency = "DA";
+
+    public $currency = 'DA';
 
     public $subtotal = 0;
 
@@ -27,16 +27,16 @@ class PosPage extends Page
 
     public $total = 0;
 
-    public $search = "";
+    public $search = '';
 
-    public $searchModel = "";
+    public $searchModel = '';
 
     public $categories = [];
 
     public $products = [];
 
     public $variations = [];
-    
+
     public $selected_products = [];
 
     public $hold_selected_products = [];
@@ -52,20 +52,22 @@ class PosPage extends Page
 
     public function getProductsByCategory($cate_id = null)
     {
-        if( ! empty($cate_id) )
-            $this->products = Product::where('cate_id',$cate_id)->get();
-        else
+        if (! empty($cate_id)) {
+            $this->products = Product::where('cate_id', $cate_id)->get();
+        } else {
             $this->all_products();
+        }
     }
 
     public function updatedSearch()
     {
-        if( ! empty($this->search) )
+        if (! empty($this->search)) {
             $this->products = Product::search($this->search)->get();
-        else
+        } else {
             $this->all_products();
+        }
     }
-    
+
     public function all_orders()
     {
         $this->orders = Order::all();
@@ -80,18 +82,16 @@ class PosPage extends Page
     {
         $product = Product::find($product_id);
 
-        if($product)
-        {
+        if ($product) {
             $this->variations = $product->variations;
         }
     }
 
-    public function addProduct($id,$name,$image,$price,$description,$qty,$has_variations)
+    public function addProduct($id, $name, $image, $price, $description, $qty, $has_variations)
     {
         $this->get_variations($id);
 
-        if( ! Arr::has($this->selected_products, $id) )
-        {
+        if (! Arr::has($this->selected_products, $id)) {
             $this->selected_products[$id] = [
                 'id' => $id,
                 'name' => $name,
@@ -101,11 +101,10 @@ class PosPage extends Page
                 'qty' => $qty,
                 'variations' => [
 
-                ]
+                ],
             ];
         } else {
-            if( $has_variations )
-            {
+            if ($has_variations) {
                 $value = [
                     'id' => $id,
                     'name' => $name,
@@ -132,7 +131,7 @@ class PosPage extends Page
         $this->total();
     }
 
-    public function removeVariation($id,$index)
+    public function removeVariation($id, $index)
     {
         unset($this->selected_products[$id]['variations'][$index]);
         $this->selected_products = array_values($this->selected_products);
@@ -147,8 +146,9 @@ class PosPage extends Page
 
     public function qtyDec($index)
     {
-        if( $this->selected_products[$index]['qty'] > 1 )
+        if ($this->selected_products[$index]['qty'] > 1) {
             $this->selected_products[$index]['qty']--;
+        }
         $this->total();
     }
 
@@ -159,43 +159,41 @@ class PosPage extends Page
     }
 
     public function total()
-    { 
+    {
         $this->total = 0;
-        foreach($this->selected_products as $item)
+        foreach ($this->selected_products as $item) {
             $this->total += $item['price'] * $item['qty'];
+        }
     }
-    
+
     public function add_to_hold_list()
     {
-        if( count($this->selected_products) > 0 )
-        {
-            array_push($this->hold_selected_products,$this->selected_products);
+        if (count($this->selected_products) > 0) {
+            array_push($this->hold_selected_products, $this->selected_products);
             $this->cancel();
         } else {
             $this->emit('error', 'Please select an item !');
         }
     }
-    
+
     public function hold_out_from_hold_list($key)
     {
-        if( count($this->hold_selected_products) > 0 )
-        {
-            if( count($this->selected_products) == 0 )
-            {
+        if (count($this->hold_selected_products) > 0) {
+            if (count($this->selected_products) == 0) {
                 $this->selected_products = $this->hold_selected_products[$key];
                 $this->removeHoldList($key);
                 $this->total();
             }
         }
     }
-    
+
     public function removeHoldList($index)
     {
         unset($this->hold_selected_products[$index]);
         $this->hold_selected_products = array_values($this->hold_selected_products);
     }
-    
-    public function removeHoldListItem($id,$index)
+
+    public function removeHoldListItem($id, $index)
     {
         unset($this->hold_selected_products[$id][$index]);
         $this->hold_selected_products = array_values($this->hold_selected_products);
@@ -203,57 +201,54 @@ class PosPage extends Page
 
     protected function getHeader(): ?View
     {
-        return view('filament-pos::components.layouts.header',[
+        return view('filament-pos::components.layouts.header', [
             'hold_selected_products' => $this->hold_selected_products,
-            'orders' => $this->orders
+            'orders' => $this->orders,
         ]);
     }
-    
+
     protected function getFooter(): ?View
     {
         return view('filament-pos::components.layouts.footer');
     }
-    
+
     public function submit()
     {
-        try
-        {
-            if( count($this->selected_products) > 0 )
-            {
+        try {
+            if (count($this->selected_products) > 0) {
                 $order = Order::create([
-                    "ref_amount" => 0,
-                    "service_charge" => 0,
-                    "discount" => 0,
-                    "order_bill" => 0,
-                    "vat" => 0,
-                    "vat_system" => 0,
-                    "cgst" => 0,
-                    "sgst" => 0,
-                    "total_payable" => 0,
-                    "bill_distribution" => 0,
-                    "paid_amount" => 0,
-                    "return_amount" => 0,
-                    "is_paid" => false,
-                    "customer_id" => 1
+                    'ref_amount' => 0,
+                    'service_charge' => 0,
+                    'discount' => 0,
+                    'order_bill' => 0,
+                    'vat' => 0,
+                    'vat_system' => 0,
+                    'cgst' => 0,
+                    'sgst' => 0,
+                    'total_payable' => 0,
+                    'bill_distribution' => 0,
+                    'paid_amount' => 0,
+                    'return_amount' => 0,
+                    'is_paid' => false,
+                    'customer_id' => 1,
                 ]);
-        
+
                 foreach ($this->selected_products as $productData) {
                     $order->items()->create([
-                        "payment_method" => "Cash",
-                        "qty" => 0,
-                        "price" => 0,
-                        "product_id" => 1
+                        'payment_method' => 'Cash',
+                        'qty' => 0,
+                        'price' => 0,
+                        'product_id' => 1,
                     ]);
                 }
-                
+
                 $this->cancel();
 
                 $this->emit('success', 'Order has been approved');
             } else {
                 $this->emit('error', 'Please select an item !');
             }
-        } catch(\ErrorException $err)
-        {
+        } catch (\ErrorException $err) {
             // Error Swal event
         }
 

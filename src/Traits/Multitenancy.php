@@ -1,13 +1,14 @@
 <?php
 
 namespace IbrahimBougaoua\FilamentPos\Traits;
+
 use Auth;
 
-trait Multitenancy {
+trait Multitenancy
+{
     public static function bootMultitenancy()
     {
-        if(auth()->check())
-        {
+        if (auth()->check()) {
             static::creating(function ($model) {
                 $model->user_id = Auth::user()->id;
             });

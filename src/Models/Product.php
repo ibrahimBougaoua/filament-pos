@@ -11,18 +11,18 @@ class Product extends Model
     use HasFactory,Searchable;
 
     protected $fillable = [
-        "name",
-        "slug",
-        "sku",
-        "barcode_type",
-        "description",
-        "price",
-        "image",
-        "has_variations",
-        "status",
-        "cate_id",
-        "unit_id",
-        "brand_id"
+        'name',
+        'slug',
+        'sku',
+        'barcode_type',
+        'description',
+        'price',
+        'image',
+        'has_variations',
+        'status',
+        'cate_id',
+        'unit_id',
+        'brand_id',
     ];
 
     public function toSearchableArray()
@@ -34,24 +34,24 @@ class Product extends Model
             'barcode_type' => $this->barcode_type,
         ];
     }
-    
+
     public function variations()
     {
-        return $this->hasMany(ProductVariation::class,"product_id");
+        return $this->hasMany(ProductVariation::class, 'product_id');
     }
-    
+
     public function category()
     {
-        return $this->belongsTo(Category::class,"cate_id");
+        return $this->belongsTo(Category::class, 'cate_id');
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class,"unit_id");
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class,"brand_id");
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 }

@@ -8,17 +8,17 @@ use IbrahimBougaoua\FilamentPos\Commands\FilamentPosCommand;
 use IbrahimBougaoua\FilamentPos\Pages\PosPage;
 use IbrahimBougaoua\FilamentPos\Resources\BrandResource;
 use IbrahimBougaoua\FilamentPos\Resources\CategoryResource;
-use IbrahimBougaoua\FilamentPos\Resources\PriceGroupResource;
-use IbrahimBougaoua\FilamentPos\Resources\VariationResource;
-use IbrahimBougaoua\FilamentPos\Resources\UnitResource;
-use IbrahimBougaoua\FilamentPos\Resources\ProductResource;
 use IbrahimBougaoua\FilamentPos\Resources\CustomerResource;
+use IbrahimBougaoua\FilamentPos\Resources\PriceGroupResource;
+use IbrahimBougaoua\FilamentPos\Resources\ProductResource;
+use IbrahimBougaoua\FilamentPos\Resources\UnitResource;
+use IbrahimBougaoua\FilamentPos\Resources\VariationResource;
 use Spatie\LaravelPackageTools\Package;
 
 class FilamentPosServiceProvider extends PluginServiceProvider
 {
     protected array $styles = [
-        'pos-styles' => __DIR__ . '/../dist/css/app.css',
+        'pos-styles' => __DIR__.'/../dist/css/app.css',
     ];
 
     protected array $beforeCoreScripts = [
@@ -39,7 +39,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
     protected array $pages = [
         PosPage::class,
     ];
-    
+
     protected function getUserMenuItems(): array
     {
         return [
@@ -49,7 +49,7 @@ class FilamentPosServiceProvider extends PluginServiceProvider
                 ->icon('heroicon-s-cog'),
         ];
     }
-    
+
     public function configurePackage(Package $package): void
     {
         /*

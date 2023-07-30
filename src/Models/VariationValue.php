@@ -10,8 +10,7 @@ class VariationValue extends Model
     use HasFactory;
 
     protected $fillable = [
-        "value",
-        "variation_id"
+        'value',
+        'variation_id',
     ];
-
 }

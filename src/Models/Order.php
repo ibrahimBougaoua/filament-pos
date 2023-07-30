@@ -13,25 +13,25 @@ class Order extends Model
     protected $table = 'fl_orders';
 
     protected $fillable = [
-        "ref_amount",
-        "service_charge",
-        "discount",
-        "order_bill",
-        "vat",
-        "vat_system",
-        "cgst",
-        "sgst",
-        "total_payable",
-        "bill_distribution",
-        "paid_amount",
-        "return_amount",
-        "is_paid",
-        "customer_id",
-        "user_id"
+        'ref_amount',
+        'service_charge',
+        'discount',
+        'order_bill',
+        'vat',
+        'vat_system',
+        'cgst',
+        'sgst',
+        'total_payable',
+        'bill_distribution',
+        'paid_amount',
+        'return_amount',
+        'is_paid',
+        'customer_id',
+        'user_id',
     ];
 
     public function items()
     {
-        return $this->hasMany(OrderItem::class,"order_id");
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 }
